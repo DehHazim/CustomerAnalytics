@@ -1,0 +1,11 @@
+order_id,customer_id,order_date,product_category,quantity,unit_price,discount_pct,status
+O1001,C001,2025-02-02,Analytics Platform,2,1250.00,0.10,completed
+O1002,C002,2025-02-14,Support Plan,1,320.00,0.00,completed
+O1003,C003,2025-03-05,Analytics Platform,1,1250.00,0.05,completed
+O1004,C004,2025-03-17,Data Integration,3,760.00,0.12,completed
+O1005,C005,2025-03-25,Support Plan,2,320.00,0.00,cancelled
+O1006,C001,2025-04-04,Data Integration,1,760.00,0.00,completed
+O1007,C006,2025-04-12,Analytics Platform,2,1250.00,0.08,completed
+O1008,C007,2025-04-22,Data Integration,2,760.00,0.10,completed
+O1009,C008,2025-05-01,Support Plan,1,320.00,0.00,completed
+O1010,C003,2025-05-08,Data Integration,1,760.00,0.05,completed

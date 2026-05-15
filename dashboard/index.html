@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Customer Analytics Dashboard</title>
+    <style>
+      :root {
+        --bg: #f5f7fb;
+        --panel: #ffffff;
+        --ink: #162033;
+        --muted: #667085;
+        --line: #d9e0ea;
+        --blue: #2563eb;
+        --green: #0f9f6e;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, Segoe UI, Arial, sans-serif;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        padding: 22px 32px;
+        background: var(--panel);
+        border-bottom: 1px solid var(--line);
+      }
+
+      h1,
+      h2 {
+        margin: 0;
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 16px;
+      }
+
+      main {
+        width: min(1180px, calc(100% - 32px));
+        margin: 24px auto 40px;
+      }
+
+      .status {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 16px;
+      }
+
+      .metrics {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-bottom: 16px;
+      }
+
+      .layout {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 18px;
+      }
+
+      .metric-label {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .metric-value {
+        margin-top: 8px;
+        font-size: 28px;
+        font-weight: 750;
+      }
+
+      .metric-note {
+        margin-top: 6px;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 14px;
+      }
+
+      .bars {
+        display: grid;
+        gap: 12px;
+      }
+
+      .bar-row {
+        display: grid;
+        grid-template-columns: 92px 1fr 90px;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+      }
+
+      .track {
+        height: 12px;
+        overflow: hidden;
+        background: #edf1f7;
+        border-radius: 999px;
+      }
+
+      .fill {
+        height: 100%;
+        width: 0;
+        background: var(--blue);
+        border-radius: inherit;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+
+      th,
+      td {
+        padding: 11px 8px;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        white-space: nowrap;
+      }
+
+      th {
+        color: var(--muted);
+        font-weight: 650;
+      }
+
+      td.number,
+      th.number {
+        text-align: right;
+      }
+
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: end;
+        gap: 10px;
+        height: 220px;
+        padding-top: 8px;
+      }
+
+      .month {
+        display: grid;
+        align-items: end;
+        gap: 8px;
+        height: 100%;
+      }
+
+      .column {
+        min-height: 8px;
+        background: linear-gradient(180deg, var(--green), #41c49a);
+        border-radius: 6px 6px 2px 2px;
+      }
+
+      .month-label {
+        color: var(--muted);
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .empty {
+        color: var(--muted);
+        padding: 18px;
+      }
+
+      @media (max-width: 860px) {
+        header {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 18px;
+        }
+
+        main {
+          width: min(100% - 20px, 720px);
+          margin-top: 14px;
+        }
+
+        .metrics,
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .timeline {
+          height: 180px;
+        }
+
+        .table-wrap {
+          overflow-x: auto;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Customer Analytics Dashboard</h1>
+        <div class="status" id="status">Loading pipeline outputs...</div>
+      </div>
+      <div class="status">CSV, JSON, Pandas, SQL, ETL</div>
+    </header>
+
+    <main>
+      <section class="grid metrics">
+        <div class="card">
+          <div class="metric-label">Net Revenue</div>
+          <div class="metric-value" id="netRevenue">$0</div>
+          <div class="metric-note">Completed and paid orders</div>
+        </div>
+        <div class="card">
+          <div class="metric-label">Orders</div>
+          <div class="metric-value" id="orders">0</div>
+          <div class="metric-note">Across the reporting window</div>
+        </div>
+        <div class="card">
+          <div class="metric-label">Customers</div>
+          <div class="metric-value" id="customers">0</div>
+          <div class="metric-note">Unique buying customers</div>
+        </div>
+        <div class="card">
+          <div class="metric-label">Average Order Value</div>
+          <div class="metric-value" id="aov">$0</div>
+          <div class="metric-note">Net revenue per order</div>
+        </div>
+      </section>
+
+      <section class="grid layout">
+        <div class="card">
+          <div class="section-head">
+            <h2>Monthly Revenue</h2>
+            <span class="status">Revenue trend</span>
+          </div>
+          <div class="timeline" id="timeline"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <h2>Segment Performance</h2>
+            <span class="status">Net revenue</span>
+          </div>
+          <div class="bars" id="segments"></div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <h2>Top Customers</h2>
+            <span class="status">Lifetime value</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Segment</th>
+                  <th class="number">Orders</th>
+                  <th class="number">Value</th>
+                </tr>
+              </thead>
+              <tbody id="customersTable"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="section-head">
+            <h2>Campaign Performance</h2>
+            <span class="status">Attributed impact</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Campaign</th>
+                  <th>Channel</th>
+                  <th class="number">Revenue</th>
+                  <th class="number">ROI</th>
+                </tr>
+              </thead>
+              <tbody id="campaignsTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const files = {
+        monthly: "../data/analytics/mart_monthly_revenue.csv",
+        segments: "../data/analytics/mart_segment_performance.csv",
+        customers: "../data/analytics/mart_customer_lifetime_value.csv",
+        campaigns: "../data/analytics/mart_campaign_performance.csv"
+      };
+
+      const money = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+        maximumFractionDigits: 0
+      });
+
+      function parseCsv(text) {
+        const lines = text.trim().split(/\r?\n/);
+        const headers = lines.shift().split(",");
+        return lines.map((line) => {
+          const values = line.split(",");
+          return Object.fromEntries(headers.map((header, index) => [header, values[index]]));
+        });
+      }
+
+      async function loadCsv(path) {
+        const response = await fetch(path);
+        if (!response.ok) {
+          throw new Error(`Could not load ${path}`);
+        }
+        return parseCsv(await response.text());
+      }
+
+      function number(value) {
+        return Number.parseFloat(value || "0");
+      }
+
+      function renderMetrics(monthly) {
+        const totals = monthly.reduce(
+          (acc, row) => {
+            acc.revenue += number(row.net_revenue);
+            acc.orders += number(row.orders);
+            acc.customers += number(row.customers);
+            return acc;
+          },
+          { revenue: 0, orders: 0, customers: 0 }
+        );
+
+        document.querySelector("#netRevenue").textContent = money.format(totals.revenue);
+        document.querySelector("#orders").textContent = totals.orders.toLocaleString("en-US");
+        document.querySelector("#customers").textContent = totals.customers.toLocaleString("en-US");
+        document.querySelector("#aov").textContent = money.format(totals.revenue / Math.max(totals.orders, 1));
+      }
+
+      function renderTimeline(monthly) {
+        const maxRevenue = Math.max(...monthly.map((row) => number(row.net_revenue)), 1);
+        document.querySelector("#timeline").innerHTML = monthly
+          .map((row) => {
+            const height = Math.max((number(row.net_revenue) / maxRevenue) * 100, 4);
+            return `
+              <div class="month">
+                <div class="column" title="${money.format(number(row.net_revenue))}" style="height:${height}%"></div>
+                <div class="month-label">${row.order_month}</div>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderSegments(segments) {
+        const maxRevenue = Math.max(...segments.map((row) => number(row.net_revenue)), 1);
+        document.querySelector("#segments").innerHTML = segments
+          .map((row) => {
+            const width = Math.max((number(row.net_revenue) / maxRevenue) * 100, 3);
+            return `
+              <div class="bar-row">
+                <span>${row.segment}</span>
+                <div class="track"><div class="fill" style="width:${width}%"></div></div>
+                <strong>${money.format(number(row.net_revenue))}</strong>
+              </div>
+            `;
+          })
+          .join("");
+      }
+
+      function renderCustomers(customers) {
+        document.querySelector("#customersTable").innerHTML = customers
+          .slice(0, 6)
+          .map(
+            (row) => `
+              <tr>
+                <td>${row.name}</td>
+                <td>${row.segment}</td>
+                <td class="number">${row.total_orders}</td>
+                <td class="number">${money.format(number(row.lifetime_value))}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderCampaigns(campaigns) {
+        document.querySelector("#campaignsTable").innerHTML = campaigns
+          .map(
+            (row) => `
+              <tr>
+                <td>${row.campaign_name}</td>
+                <td>${row.channel}</td>
+                <td class="number">${money.format(number(row.attributed_revenue))}</td>
+                <td class="number">${number(row.roi).toFixed(2)}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      async function boot() {
+        try {
+          const [monthly, segments, customers, campaigns] = await Promise.all([
+            loadCsv(files.monthly),
+            loadCsv(files.segments),
+            loadCsv(files.customers),
+            loadCsv(files.campaigns)
+          ]);
+
+          renderMetrics(monthly);
+          renderTimeline(monthly);
+          renderSegments(segments);
+          renderCustomers(customers);
+          renderCampaigns(campaigns);
+          document.querySelector("#status").textContent = "Loaded analytics outputs successfully.";
+        } catch (error) {
+          document.querySelector("#status").textContent = error.message;
+          document.querySelector("main").insertAdjacentHTML(
+            "afterbegin",
+            `<div class="card empty">Run <strong>py main.py</strong> first, then refresh this page.</div>`
+          );
+        }
+      }
+
+      boot();
+    </script>
+  </body>
+</html>

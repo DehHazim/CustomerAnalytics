@@ -1,0 +1,32 @@
+{
+  "source": "marketing_platform",
+  "campaigns": [
+    {
+      "campaign_id": "MKT001",
+      "segment": "Enterprise",
+      "channel": "LinkedIn",
+      "campaign_name": "Enterprise Data Leaders",
+      "spend": 1800.0,
+      "start_date": "2025-02-01",
+      "end_date": "2025-04-30"
+    },
+    {
+      "campaign_id": "MKT002",
+      "segment": "SMB",
+      "channel": "Email",
+      "campaign_name": "SMB Retention Push",
+      "spend": 450.0,
+      "start_date": "2025-02-01",
+      "end_date": "2025-05-15"
+    },
+    {
+      "campaign_id": "MKT003",
+      "segment": "Mid-Market",
+      "channel": "Search",
+      "campaign_name": "Mid Market Analytics Trial",
+      "spend": 950.0,
+      "start_date": "2025-03-01",
+      "end_date": "2025-05-31"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+[project]
+name = "customer-analytics-pipeline"
+version = "0.1.0"
+description = "Customer analytics ETL pipeline using Python, Pandas, SQL, JSON, CSV, and SQLite."
+requires-python = ">=3.10"
+dependencies = [
+    "pandas>=2.2.0"
+]
+
+[project.scripts]
+customer-analytics-pipeline = "customer_analytics.pipeline:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

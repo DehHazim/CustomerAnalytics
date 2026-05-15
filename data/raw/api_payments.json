@@ -1,0 +1,75 @@
+{
+  "source": "payments_api",
+  "payments": [
+    {
+      "payment_id": "P9001",
+      "order_id": "O1001",
+      "payment_method": "credit_card",
+      "payment_status": "paid",
+      "processed_at": "2025-02-02T10:15:00"
+    },
+    {
+      "payment_id": "P9002",
+      "order_id": "O1002",
+      "payment_method": "pix",
+      "payment_status": "paid",
+      "processed_at": "2025-02-14T12:40:00"
+    },
+    {
+      "payment_id": "P9003",
+      "order_id": "O1003",
+      "payment_method": "bank_transfer",
+      "payment_status": "paid",
+      "processed_at": "2025-03-05T09:30:00"
+    },
+    {
+      "payment_id": "P9004",
+      "order_id": "O1004",
+      "payment_method": "credit_card",
+      "payment_status": "paid",
+      "processed_at": "2025-03-17T16:55:00"
+    },
+    {
+      "payment_id": "P9005",
+      "order_id": "O1005",
+      "payment_method": "pix",
+      "payment_status": "refunded",
+      "processed_at": "2025-03-25T11:05:00"
+    },
+    {
+      "payment_id": "P9006",
+      "order_id": "O1006",
+      "payment_method": "credit_card",
+      "payment_status": "paid",
+      "processed_at": "2025-04-04T14:10:00"
+    },
+    {
+      "payment_id": "P9007",
+      "order_id": "O1007",
+      "payment_method": "bank_transfer",
+      "payment_status": "paid",
+      "processed_at": "2025-04-12T15:20:00"
+    },
+    {
+      "payment_id": "P9008",
+      "order_id": "O1008",
+      "payment_method": "credit_card",
+      "payment_status": "paid",
+      "processed_at": "2025-04-22T10:45:00"
+    },
+    {
+      "payment_id": "P9009",
+      "order_id": "O1009",
+      "payment_method": "pix",
+      "payment_status": "paid",
+      "processed_at": "2025-05-01T08:05:00"
+    },
+    {
+      "payment_id": "P9010",
+      "order_id": "O1010",
+      "payment_method": "credit_card",
+      "payment_status": "paid",
+      "processed_at": "2025-05-08T13:25:00"
+    }
+  ]
+}

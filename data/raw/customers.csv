@@ -1,0 +1,9 @@
+customer_id,name,email,signup_date,city,country,segment
+C001,Ana Silva,ANA.SILVA@example.com,2025-01-08,Sao Paulo,Brazil,Enterprise
+C002,Bruno Costa,bruno.costa@example.com,2025-01-21,Rio de Janeiro,Brazil,SMB
+C003,Carla Mendes,carla.mendes@example.com,2025-02-11,Belo Horizonte,Brazil,Mid-Market
+C004,Daniel Rocha,daniel.rocha@example.com,2025-02-25,Curitiba,Brazil,Enterprise
+C005,Elisa Nunes,elisa.nunes@example.com,2025-03-03,Porto Alegre,Brazil,SMB
+C006,Felipe Santos,felipe.santos@example.com,2025-03-18,Recife,Brazil,Mid-Market
+C007,Gabriela Lima,gabriela.lima@example.com,2025-04-02,Salvador,Brazil,Enterprise
+C008,Henrique Alves,henrique.alves@example.com,2025-04-16,Fortaleza,Brazil,SMB

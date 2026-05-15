@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+data/processed/
+data/analytics/
+warehouse/
+*.db
+*.db-journal
